@@ -1,240 +1,50 @@
 <!doctype html>
-<!--
-  Portfolio starter (single-file): HTML + CSS + JS
-  - Edítalo: cambia textos, fotos, links y paleta de colores en :root
-  - Estructura: Hero, About, Projects, Skills, Contact, Footer
-  - Accesibilidad: roles, labels, prefers-reduced-motion support
--->
 <html lang="es">
 <head>
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Tu Nombre — Portfolio</title>
-  <meta name="description" content="Portfolio de Tu Nombre — diseñador interactivo / desarrollador front-end. Proyectos, habilidades y contacto." />
-  <meta name="author" content="Tu Nombre" />
-  <link rel="icon" href="data:;base64,iVBORw0KGgo=" />
+  <meta name="description" content="Portfolio de Tu Nombre — diseñador interactivo / desarrollador front-end." />
 
-  <style>
-    :root{
-      --bg:#0f1724; /* fondo oscuro */
-      --card:#0b1220;
-      --muted:#9aa4b2;
-      --accent:#7c3aed; /* morado vibrante */
-      --glass: rgba(255,255,255,0.04);
-      --radius:14px;
-      --max-width:1100px;
-      --ff-sans: "Inter", system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
-    }
+  <!-- Estilos -->
+  <link rel="stylesheet" href="css/styles.css" />
 
-    /* Reset ligero */
-    *{box-sizing:border-box}
-    html,body{height:100%}
-    body{
-      margin:0;
-      font-family:var(--ff-sans);
-      background:linear-gradient(180deg,var(--bg), #071021 70%);
-      color:#e6eef8;
-      -webkit-font-smoothing:antialiased;
-      -moz-osx-font-smoothing:grayscale;
-      line-height:1.4;
-      padding:32px 16px;
-      display:flex;justify-content:center;
-    }
+  <!-- three.js CDN -->
+  <script src="https://unpkg.com/three@0.152.2/build/three.min.js"></script>
 
-    .wrap{width:100%;max-width:var(--max-width)}
-
-    header{display:flex;align-items:center;justify-content:space-between;margin-bottom:28px}
-    .brand{display:flex;gap:12px;align-items:center}
-    .logo{width:48px;height:48px;border-radius:10px;background:linear-gradient(135deg,var(--accent),#06b6d4);display:flex;align-items:center;justify-content:center;font-weight:700}
-    .brand h1{font-size:18px;margin:0}
-    nav a{color:var(--muted);text-decoration:none;margin-left:18px;font-size:15px}
-    nav a:hover{color:#fff}
-
-    /* Hero */
-    .hero{display:grid;grid-template-columns:1fr 360px;gap:28px;align-items:center;margin-bottom:32px}
-    .hero-card{background:linear-gradient(180deg, rgba(255,255,255,0.02), transparent);padding:28px;border-radius:var(--radius);box-shadow:0 6px 24px rgba(2,6,23,0.6)}
-    .hero h2{margin:0 0 8px;font-size:28px}
-    .hero p{color:var(--muted);margin:0 0 18px}
-    .cta{display:inline-block;padding:10px 14px;border-radius:12px;background:var(--accent);color:#fff;text-decoration:none;font-weight:600}
-
-    .avatar{width:100%;height:360px;border-radius:12px;background:linear-gradient(180deg,#0b1220,#123);display:flex;align-items:center;justify-content:center;color:var(--muted);font-size:13px}
-
-    /* Grid general */
-    .grid{display:grid;grid-template-columns:repeat(12,1fr);gap:18px}
-    .col-8{grid-column:span 8}
-    .col-4{grid-column:span 4}
-
-    /* Projects */
-    .projects{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:16px}
-    .project{background:var(--card);padding:14px;border-radius:12px;border:1px solid rgba(255,255,255,0.03)}
-    .project h3{margin:0 0 8px;font-size:16px}
-    .project p{margin:0;color:var(--muted);font-size:14px}
-    .tags{margin-top:10px;display:flex;gap:8px;flex-wrap:wrap}
-    .tag{font-size:12px;padding:6px 8px;border-radius:999px;background:var(--glass);color:var(--muted)}
-
-    /* Skills */
-    .skills{display:flex;gap:8px;flex-wrap:wrap}
-    .skill{background:linear-gradient(90deg, rgba(255,255,255,0.02), transparent);padding:10px 12px;border-radius:10px}
-
-    /* Contact */
-    .contact form{display:grid;gap:10px}
-    input,textarea{background:transparent;border:1px solid rgba(255,255,255,0.06);padding:10px;border-radius:8px;color:inherit}
-    input::placeholder,textarea::placeholder{color:var(--muted)}
-    button[type=submit]{padding:10px 12px;border-radius:10px;background:var(--accent);border:0;color:white;font-weight:600}
-
-    footer{margin-top:28px;color:var(--muted);font-size:13px;text-align:center}
-
-    /* Responsive */
-    @media (max-width:860px){
-      .hero{grid-template-columns:1fr}
-      .avatar{height:220px}
-      .col-8,.col-4{grid-column:span 12}
-    }
-
-    /* Reduced motion */
-    @media (prefers-reduced-motion: no-preference){
-      .hero-card{transform:translateY(0);transition:transform .45s cubic-bezier(.2,.9,.2,1)}
-      .hero-card:hover{transform:translateY(-6px)}
-      .project{transition:transform .22s ease, box-shadow .22s ease}
-      .project:hover{transform:translateY(-6px);box-shadow:0 10px 30px rgba(2,6,23,0.6)}
-    }
-  </style>
+  <!-- Lógica JS -->
+  <script src="js/main.js" defer></script>
 </head>
 <body>
-  <div class="wrap" id="top">
-    <header>
-      <div class="brand">
-        <div class="logo" aria-hidden>MN</div>
-        <div>
-          <h1>Tu Nombre</h1>
-          <div style="font-size:13px;color:var(--muted)">Diseñador Interactivo • Front‑end</div>
-        </div>
-      </div>
-      <nav aria-label="Navegación principal">
-        <a href="#projects">Proyectos</a>
-        <a href="#skills">Habilidades</a>
-        <a href="#contact">Contacto</a>
-        <a href="#" id="themeToggle" aria-pressed="false">Modo</a>
+  <div class="page-bg">
+    <div class="site-container" role="main" aria-label="Contenedor principal del sitio">
+      <!-- Botón menu (30px desde el borde interior del marco) -->
+      <button class="menu-btn" aria-label="Abrir menú" aria-expanded="false">☰</button>
+
+      <!-- Circular menu -->
+      <nav class="circular-menu" aria-hidden="true" aria-label="Menú principal">
+        <ul>
+          <!-- data-angle controls final angular offset around the button (degrees). You can tweak them. -->
+          <li class="circular-item" data-angle="-45"><a href="#home">Home</a></li>
+          <li class="circular-item" data-angle="-15"><a href="#portfolio">Portafolio</a></li>
+          <li class="circular-item" data-angle="15"><a href="#about">Acerca de mi</a></li>
+          <li class="circular-item" data-angle="45"><a href="#contact">Contacto</a></li>
+        </ul>
       </nav>
-    </header>
 
-    <section class="hero grid" aria-labelledby="hero-title">
-      <div class="hero-card col-8">
-        <h2 id="hero-title">Hola — soy Tu Nombre.</h2>
-        <p>Diseño y desarrollo interfaces limpias y con intención. Me enfoco en producto digital, interacción y prototipado rápido.</p>
-        <p style="color:var(--muted);font-size:14px">Trabajo con HTML, CSS, JS y herramientas de diseño. Aquí tienes una selección de proyectos recientes.</p>
-        <p>
-          <a class="cta" href="#projects">Ver proyectos</a>
-          <a style="margin-left:12px;color:var(--muted);text-decoration:none" href="#contact">Contratar</a>
-        </p>
-      </div>
+      <!-- three.js canvas se añadirá automáticamente por JS como <canvas class="three-canvas"> -->
 
-      <aside class="avatar col-4" aria-label="Foto de perfil / ilustración">
-        <div>
-          <strong style="display:block">Foto / Ilustración</strong>
-          <small style="color:var(--muted);display:block;margin-top:6px">Sustituye esto por tu imagen (jpg / webp) o canvas SVG</small>
-        </div>
-      </aside>
-    </section>
-
-    <main>
-      <section id="projects" style="margin-bottom:22px">
-        <h2 style="margin:8px 0 14px">Proyectos</h2>
-        <div class="projects" role="list">
-          <article class="project" role="listitem">
-            <h3>Proyecto A — Página de producto</h3>
-            <p>Descripción corta del reto, tu rol y el resultado (métricas si las hay).</p>
-            <div class="tags"><span class="tag">HTML</span><span class="tag">CSS</span><span class="tag">JS</span></div>
-          </article>
-
-          <article class="project" role="listitem">
-            <h3>Proyecto B — Interacción</h3>
-            <p>Microinteracciones y prototipo responsive con enfoque de accesibilidad.</p>
-            <div class="tags"><span class="tag">Figma</span><span class="tag">Prototipo</span></div>
-          </article>
-
-          <article class="project" role="listitem">
-            <h3>Proyecto C — Visualización</h3>
-            <p>Dashboard con visualizaciones y filtros personalizados.</p>
-            <div class="tags"><span class="tag">D3</span><span class="tag">React</span></div>
-          </article>
-        </div>
-      </section>
-
-      <section id="skills" style="margin-bottom:22px">
-        <h2 style="margin:8px 0 14px">Habilidades</h2>
-        <div class="skills" role="list">
-          <div class="skill" role="listitem">HTML semántico</div>
-          <div class="skill" role="listitem">CSS moderno (Flexbox, Grid, variables)</div>
-          <div class="skill" role="listitem">JS (ES6+): DOM, fetch, async</div>
-          <div class="skill" role="listitem">Accesibilidad y SEO</div>
-          <div class="skill" role="listitem">Prototipado y diseño de interacción</div>
-        </div>
-      </section>
-
-      <section id="contact" class="contact" style="margin-bottom:22px">
-        <h2 style="margin:8px 0 14px">Contacto</h2>
-        <form onsubmit="handleContact(event)" aria-label="Formulario de contacto">
-          <input type="text" id="name" name="name" placeholder="Tu nombre" required />
-          <input type="email" id="email" name="email" placeholder="Tu correo" required />
-          <textarea id="message" name="message" rows="4" placeholder="Tu mensaje" required></textarea>
-          <div style="display:flex;gap:8px;align-items:center">
-            <button type="submit">Enviar</button>
-            <a href="mailto:tu@correo.com" style="color:var(--muted);text-decoration:none">O escribe directamente</a>
+      <!-- Contenido principal (por encima del canvas) -->
+      <div class="content-inner">
+        <div class="content-placeholder" id="home">
+          <div class="hero">
+            <h1>Tu Nombre</h1>
+            <p>Diseñador interactivo • Front-end</p>
           </div>
-        </form>
-      </section>
-    </main>
-
-    <footer>
-      <div>© <span id="year"></span> Tu Nombre — <span style="color:var(--muted)">Diseño & Front‑end</span></div>
-    </footer>
+        </div>
+        <!-- Resto del contenido (portafolio, about, contact...) -->
+      </div>
+    </div>
   </div>
-
-  <script>
-    // Pequeñas utilidades JS: toggle tema, form handler, year
-    document.getElementById('year').textContent = new Date().getFullYear();
-
-    const themeToggle = document.getElementById('themeToggle');
-    themeToggle.addEventListener('click', (e)=>{
-      e.preventDefault();
-      const pressed = themeToggle.getAttribute('aria-pressed') === 'true';
-      themeToggle.setAttribute('aria-pressed', String(!pressed));
-      if(!pressed){
-        document.documentElement.style.setProperty('--bg','#f8fafc');
-        document.documentElement.style.setProperty('--card','#ffffff');
-        document.documentElement.style.setProperty('--muted','#475569');
-        document.documentElement.style.setProperty('--accent','#7c3aed');
-        document.documentElement.style.setProperty('color-scheme','light');
-      } else {
-        document.documentElement.style.setProperty('--bg','#0f1724');
-        document.documentElement.style.setProperty('--card','#0b1220');
-        document.documentElement.style.setProperty('--muted','#9aa4b2');
-        document.documentElement.style.setProperty('color-scheme','dark');
-      }
-    });
-
-    function handleContact(e){
-      e.preventDefault();
-      const name = document.getElementById('name').value.trim();
-      const email = document.getElementById('email').value.trim();
-      const msg = document.getElementById('message').value.trim();
-      // Demo: abre el cliente de correo con mailto (para producción, conecta a un backend)
-      const subject = encodeURIComponent('Contacto desde portfolio: ' + name);
-      const body = encodeURIComponent(msg + '\n\n' + 'Email: ' + email);
-      window.location.href = `mailto:tu@correo.com?subject=${subject}&body=${body}`;
-    }
-
-    // Smooth scroll for internal links
-    document.querySelectorAll('a[href^="#"]').forEach(a=>{
-      a.addEventListener('click', (e)=>{
-        const target = a.getAttribute('href');
-        if(target === '#') return; // evita scroll al top para links vacíos
-        e.preventDefault();
-        const el = document.querySelector(target);
-        if(el) el.scrollIntoView({behavior:'smooth',block:'start'});
-      })
-    })
-  </script>
 </body>
 </html>

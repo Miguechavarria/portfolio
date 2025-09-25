@@ -1,0 +1,299 @@
+/* ============================
+   CSS completo corregido
+   - Restaura el circular menu funcional
+   - Mantiene three.js canvas y rectángulo interior
+   - Añade hero en esquina sup-izq con 72pt
+   - Poppins para párrafos, Contrax para títulos
+   ============================ */
+
+/* Fonts */
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;600;700&display=swap');
+
+@font-face {
+  font-family: 'Contrax';
+  src: url('/fonts/Contrax.woff2') format('woff2'),
+       url('/fonts/Contrax.woff') format('woff');
+  font-weight: 100 900;
+  font-style: normal;
+  font-display: swap;
+}
+
+/* ---------------------------
+   Variables
+   --------------------------- */
+:root{
+  /* layout */
+  --page-gap: 40px;
+  --container-radius: 10px;
+  --container-border-color: #ffffff;
+  --container-border-width: 3px;
+  --container-inner-gap: 18px;
+  --container-inner-color: rgba(255,255,255,0.06);
+  --bg: #000000;
+  --content-padding: 56px;
+
+  /* circular menu (defaults tuned) */
+  --c-menu-radius: 220px;
+  --c-item-size: 80px;
+  --c-duration: 700ms;
+  --c-ease: cubic-bezier(.2,.9,.25,1);
+  --c-stagger: 70ms;
+  --c-item-color: #fff;
+  --c-hover-border: rgba(255,255,255,0.12);
+  --c-hover-glow: rgba(255,255,255,0.06);
+
+  /* hero */
+  --hero-offset-pt: 72pt;
+  --hero-gap: 12px;
+  --title-size: 72pt;
+  --desc-size: 14px;
+}
+
+/* ---------------------------
+   Reset + base
+   --------------------------- */
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%}
+body{
+  background:var(--bg);
+  color:#fff;
+  font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  -webkit-font-smoothing:antialiased;
+  -moz-osx-font-smoothing:grayscale;
+  min-height:100vh;
+  -webkit-font-feature-settings: "kern";
+}
+
+/* ---------------------------
+   Page & container
+   --------------------------- */
+.page-bg{
+  width:100%;
+  min-height:100vh;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  padding:var(--page-gap);
+}
+
+.site-container{
+  width:100%;
+  max-width: calc(100% - (var(--page-gap) * 0));
+  height: calc(100vh - (2 * var(--page-gap)));
+  position:relative;
+  border-radius:var(--container-radius);
+  background: #000;
+  border: var(--container-border-width) solid var(--container-border-color);
+  overflow: hidden;
+  padding: var(--content-padding);
+  box-shadow:
+    inset 0 0 0 1px rgba(255,255,255,0.02),
+    0 20px 60px rgba(0,0,0,0.6);
+  -webkit-backface-visibility:hidden;
+  -webkit-transform:translateZ(0);
+}
+
+/* interior second line */
+.site-container::before{
+  content:"";
+  position:absolute;
+  inset: var(--container-inner-gap);
+  border-radius: calc(var(--container-radius) - 4px);
+  border: 1px solid var(--container-inner-color);
+  pointer-events:none;
+  z-index:1;
+}
+
+/* three.js canvas background (inserted by JS) */
+.three-canvas{
+  position:absolute;
+  inset:0;
+  z-index:0;
+  width:100%;
+  height:100%;
+  display:block;
+}
+
+/* ensure html blocks above canvas */
+.content-inner{
+  position:relative;
+  z-index:2;
+  height:50%;
+  width:100%;
+  display:flex;
+  align-items:center;
+  justify-content:center;
+  color: rgba(255,255,255,0.85);
+}
+
+/* ---------------------------
+   Hero (top-left) — Contrax title, Poppins desc
+   --------------------------- */
+.hero{
+  position:absolute;
+  top: var(--hero-offset-pt);
+  left: var(--hero-offset-pt);
+  z-index: 12;
+  display:flex;
+  flex-direction:column;
+  align-items:flex-start;
+  gap: var(--hero-gap);
+  pointer-events: auto;
+}
+
+.hero h1{
+  font-family: 'Contrax', "Segoe UI", Roboto, "Helvetica Neue", Arial, sans-serif;
+  font-size: var(--title-size);
+  line-height: 0.95;
+  color:#fff;
+  margin:0;
+  font-weight:600;
+}
+
+.hero p{
+  font-family: 'Poppins', system-ui, -apple-system, "Segoe UI", Roboto, "Helvetica Neue", Arial;
+  font-size: var(--desc-size);
+  color: rgba(255,255,255,0.78);
+  margin:0;
+}
+
+/* responsive hero adjustments */
+@media (max-width:1200px){
+  :root{
+    --title-size: 48pt;
+  }
+}
+@media (max-width:900px){
+  :root{
+    --hero-offset-pt: 36pt;
+    --title-size: 28pt;
+    --desc-size: 12px;
+    --c-menu-radius: 120px;
+    --c-item-size: 64px;
+    --content-padding: 28px;
+    --container-inner-gap: 10px;
+  }
+  .site-container{ padding: var(--content-padding); }
+  .site-container::before{ inset: var(--container-inner-gap); }
+}
+
+/* ---------------------------
+   Menu button (use .menu-btn because JS expects it)
+   --------------------------- */
+.menu-btn{
+  position:absolute;
+  left: calc(var(--container-inner-gap) + 12px); /* 30px visual from inside edge */
+  top:50%;
+  transform: translateY(-50%);
+  background: transparent;
+  border:1px solid rgba(255,255,255,0.06);
+  color:#fff;
+  padding:10px 12px;
+  border-radius:10px;
+  cursor:pointer;
+  font-size:18px;
+  z-index: 6;
+  backdrop-filter: blur(4px);
+  line-height:1;
+}
+.menu-btn:focus{ outline:2px solid rgba(124,58,237,0.28); outline-offset:3px; }
+
+/* ---------------------------
+   Circular menu (restored & improved)
+   - uses .circular-menu, .circular-item, .circular-item a
+   - JS positions items via inline transforms
+   --------------------------- */
+.circular-menu{
+  position:absolute;
+  left: calc(var(--container-inner-gap) + 4px);
+  top: 50%;
+  transform: translate(-3px, -50%) rotate(-90deg); /* closed default */
+  width:0; height:0;
+  pointer-events:none;
+  z-index: 7;
+  transition: transform var(--c-duration) var(--c-ease);
+  transform-origin: 0 50%;
+}
+
+.circular-menu ul{ list-style:none; margin:0; padding:0; position:relative; width:0; height:0; }
+
+/* each circular item is positioned and animated via JS (stores transforms in data attributes) */
+.circular-item{
+  position:absolute;
+  left:0; top:0;
+  width:var(--c-item-size);
+  height:var(--c-item-size);
+  margin:0;
+  transform-origin:50% 50%;
+  opacity:0;
+  pointer-events:none;
+  transition: transform 520ms var(--c-ease), opacity 420ms linear;
+}
+
+/* anchor inside item: no boxed background, text + hover effect */
+.circular-item a{
+  display:inline-flex;
+  align-items:center;
+  justify-content:center;
+  height:100%;
+  padding:6px 10px;
+  color:var(--c-item-color);
+  text-decoration:none;
+  font-weight:700;
+  font-size:13px;
+  line-height:1;
+  letter-spacing:0.2px;
+  background: transparent;
+  border: none;
+  border-radius:8px;
+  transition: transform 180ms ease, box-shadow 180ms ease, background-color 180ms ease;
+  -webkit-tap-highlight-color: transparent;
+}
+
+/* hover: glow + subtle inset border + scale */
+.circular-item a:hover,
+.circular-item a:focus{
+  transform: translateY(-6px) scale(1.06);
+  box-shadow: 0 12px 30px var(--c-hover-glow), 0 1px 0 var(--c-hover-border) inset;
+  border-radius:10px;
+  background: rgba(255,255,255,0.02);
+  outline: none;
+}
+
+/* states */
+.circular-menu.closed{
+  transform: translate(-3px, -50%) rotate(-90deg);
+  pointer-events:none;
+}
+.circular-menu.open{
+  transform: translate(-3px, -50%) rotate(0deg);
+  pointer-events:auto;
+}
+.circular-menu.closing{
+  transform: translate(-3px, -50%) rotate(90deg);
+  pointer-events:none;
+}
+
+/* item visibility per state */
+.circular-menu.open .circular-item{ opacity:1; pointer-events:auto; }
+.circular-menu.closed .circular-item{ opacity:0; pointer-events:none; transform: translateY(-12px) scale(0.92); }
+.circular-menu.closing .circular-item{ opacity:0; pointer-events:none; transform: translateY(18px) scale(0.9); }
+
+/* fallback stagger using nth-child */
+.circular-item:nth-child(1){ transition-delay: calc(var(--c-stagger) * 0); }
+.circular-item:nth-child(2){ transition-delay: calc(var(--c-stagger) * 1); }
+.circular-item:nth-child(3){ transition-delay: calc(var(--c-stagger) * 2); }
+.circular-item:nth-child(4){ transition-delay: calc(var(--c-stagger) * 3); }
+
+/* ---------------------------
+   Utility / small adjustments
+   --------------------------- */
+/* make sure .hero text is selectable if needed */
+.hero * { user-select: text; }
+
+/* reduce pointer interactions when necessary */
+.site-container[aria-hidden="true"] .hero { pointer-events: none; }
+
+/* ---------------------------
+   End
+   --------------------------- */
